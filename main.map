@@ -1,0 +1,468 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+__exidx_end         0x4               syscalls.o
+__exidx_start       0x4               syscalls.o
+i2cErr              0x4               main.o
+
+Discarded input sections
+
+ .data          0x00000000        0x0 asmfunc.o
+ .text          0x00000000        0x0 main.o
+ .data          0x00000000        0x0 main.o
+ .bss           0x00000000        0x0 main.o
+ .text          0x00000000        0x0 i2clib.o
+ .data          0x00000000        0x0 i2clib.o
+ .bss           0x00000000        0x0 i2clib.o
+ .text.i2crestart
+                0x00000000       0xe8 i2clib.o
+ .text          0x00000000        0x0 init.o
+ .data          0x00000000        0x0 init.o
+ .bss           0x00000000        0x0 init.o
+ .text          0x00000000        0x0 ymz.o
+ .data          0x00000000        0x0 ymz.o
+ .bss           0x00000000        0x0 ymz.o
+ .text          0x00000000        0x0 syscalls.o
+ .data          0x00000000        0x0 syscalls.o
+ .bss           0x00000000        0x0 syscalls.o
+ .text._read_r  0x00000000       0x60 syscalls.o
+ .text._write_r
+                0x00000000       0x4c syscalls.o
+ .text._close_r
+                0x00000000        0x8 syscalls.o
+ .text._lseek_r
+                0x00000000        0x8 syscalls.o
+ .text._fstat_r
+                0x00000000       0x10 syscalls.o
+ .text.isatty   0x00000000        0x8 syscalls.o
+ .text._exit    0x00000000        0x4 syscalls.o
+ .text._getpid  0x00000000        0x8 syscalls.o
+ .text._kill    0x00000000        0x8 syscalls.o
+ .text._sbrk_r  0x00000000       0x2c syscalls.o
+ .text._sbrk    0x00000000       0x30 syscalls.o
+ .text._open    0x00000000       0x10 syscalls.o
+ .text._close   0x00000000        0x8 syscalls.o
+ .text._fstat   0x00000000       0x10 syscalls.o
+ .text._isatty  0x00000000        0x8 syscalls.o
+ .text._lseek   0x00000000        0x8 syscalls.o
+ .text._read    0x00000000       0x20 syscalls.o
+ .text._write   0x00000000       0x38 syscalls.o
+ .bss.heap_ptr  0x00000000        0x4 syscalls.o
+ COMMON         0x00000000        0x8 syscalls.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ROM              0x00000000         0x0007e000         xr
+RAM              0x40000000         0x0000ffe0         w
+URAM             0x7fd00000         0x00004000         w
+ERAM             0x7fe00000         0x00004000         w
+BRAM             0xe0084000         0x00000800         w
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD asmfunc.o
+LOAD main.o
+LOAD i2clib.o
+LOAD init.o
+LOAD ymz.o
+LOAD syscalls.o
+LOAD /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a
+LOAD /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libm.a
+LOAD /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a
+LOAD /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a
+START GROUP
+LOAD /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a
+LOAD /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a
+END GROUP
+
+.text           0x00000000      0xd28
+ *(.VECTOR)
+ .VECTOR        0x00000000       0x40 asmfunc.o
+ *(.text .text.*)
+ .text          0x00000040      0x394 asmfunc.o
+                0x000001f4                IrqDisable
+                0x000001fc                IrqEnable
+                0x00000204                FiqDisable
+                0x0000020c                FiqEnable
+                0x00000214                ClearVector
+                0x0000021c                RegisterVector
+                0x00000224                StartTask
+                0x00000238                DispatchTask
+                0x0000026c                Sleep
+                0x0000028c                Load_Block
+                0x000002fc                Store_Block
+ .text.CPU_Initialize
+                0x000003d4       0xd4 main.o
+                0x000003d4                CPU_Initialize
+ .text.Delay    0x000004a8       0x2c main.o
+                0x000004a8                Delay
+ .text.issrgetbit
+                0x000004d4       0xa8 main.o
+                0x000004d4                issrgetbit
+ .text.Isr_TIMER0
+                0x0000057c       0x40 main.o
+                0x0000057c                Isr_TIMER0
+ .text.ymzinit  0x000005bc       0x30 main.o
+                0x000005bc                ymzinit
+ .text.fiqregist
+                0x000005ec       0x5c main.o
+                0x000005ec                fiqregist
+ .text.main     0x00000648       0x80 main.o
+                0x00000648                main
+ .text.i2enable
+                0x000006c8       0x14 i2clib.o
+                0x000006c8                i2enable
+ .text.i2cmasterset
+                0x000006dc       0x5c i2clib.o
+                0x000006dc                i2cmasterset
+ .text.i2cstart
+                0x00000738       0x84 i2clib.o
+                0x00000738                i2cstart
+ .text.i2cstop  0x000007bc       0x1c i2clib.o
+                0x000007bc                i2cstop
+ .text.i2csender
+                0x000007d8       0xa0 i2clib.o
+                0x000007d8                i2csender
+ .text.SCCBwrite
+                0x00000878       0x98 i2clib.o
+                0x00000878                SCCBwrite
+ .text.SCCBByteWrite
+                0x00000910       0x48 i2clib.o
+                0x00000910                SCCBByteWrite
+ .text.vi2c     0x00000958       0x58 i2clib.o
+                0x00000958                vi2c
+ .text.GPIOResetInit
+                0x000009b0       0xdc init.o
+                0x000009b0                GPIOResetInit
+ .text.ymzwrite0
+                0x00000a8c       0x64 ymz.o
+                0x00000a8c                ymzwrite0
+ .text.ymzwrite1
+                0x00000af0       0x34 ymz.o
+                0x00000af0                ymzwrite1
+ *(.gnu.linkonce.t.*)
+ *(.glue_7)
+ .glue_7        0x00000000        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x00000000        0x0 linker stubs
+ *(.gcc_except_table)
+ *(.rodata)
+ *(.rodata*)
+ .rodata.OV7670
+                0x00000b24      0x204 i2clib.o
+                0x00000b24                OV7670
+ *(.gnu.linkonce.r.*)
+                0x00000d28                . = ALIGN (0x4)
+
+.vfp11_veneer   0x00000d28        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x00000d28        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+                0x00000d28                . = ALIGN (0x4)
+                0x00000d28                _etext = .
+                0x00000d28                PROVIDE (etext, .)
+
+.data           0x40000000        0x0 load address 0x00000d28
+                0x40000000                _data = .
+ *(.data)
+ *(.data.*)
+ *(.gnu.linkonce.d*)
+                0x40000000                . = ALIGN (0x4)
+                0x40000000                . = ALIGN (0x4)
+                0x40000000                _edata = .
+                0x40000000                PROVIDE (edata, .)
+
+.bss            0x40000000       0x18
+                0x40000000                __bss_start = .
+                0x40000000                __bss_start__ = .
+ *(.bss)
+ .bss           0x40000000        0x8 asmfunc.o
+ *(.bss.*)
+ .bss.twel.1317
+                0x40000008        0x4 main.o
+ .bss.state.1318
+                0x4000000c        0x4 main.o
+ .bss.bit.1316  0x40000010        0x4 main.o
+ *(.gnu.linkonce.b*)
+ *(COMMON)
+ COMMON         0x40000014        0x4 main.o
+                0x40000014                i2cErr
+                0x40000018                . = ALIGN (0x4)
+                0x40000018                . = ALIGN (0x4)
+                0x40000018                __bss_end__ = .
+                0x40000018                PROVIDE (__bss_end, .)
+
+.stack          0x40000018      0xa00
+ *(.stack)
+ *(.STACK)
+ .STACK         0x40000018      0xa00 asmfunc.o
+                0x40000a18                PROVIDE (_stack, .)
+                0x40000a18                . = ALIGN (0x4)
+                0x40000a18                _end = .
+                0x40000a18                PROVIDE (end, .)
+
+.usbram         0x7fd00000        0x0
+                0x7fd00000                __usbram_start = .
+                0x7fd00000                __usbram_start__ = .
+ *(.usbram)
+                0x7fd00000                . = ALIGN (0x4)
+
+.etherram       0x7fe00000        0x0
+                0x7fe00000                __etherram_start = .
+                0x7fe00000                __etherram_start__ = .
+ *(.etherram)
+                0x7fe00000                . = ALIGN (0x4)
+
+.batteryram     0xe0084000        0x0
+                0xe0084000                __batteryram_start = .
+                0xe0084000                __batteryram_start__ = .
+ *(.batteryram)
+                0xe0084000                . = ALIGN (0x4)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.HEAP           0x00000000        0x0
+ .HEAP          0x00000000        0x0 asmfunc.o
+
+.ARM.attributes
+                0x00000000       0x30
+ .ARM.attributes
+                0x00000000       0x24 asmfunc.o
+ .ARM.attributes
+                0x00000024       0x34 main.o
+ .ARM.attributes
+                0x00000058       0x34 i2clib.o
+ .ARM.attributes
+                0x0000008c       0x34 init.o
+ .ARM.attributes
+                0x000000c0       0x34 ymz.o
+ .ARM.attributes
+                0x000000f4       0x34 syscalls.o
+
+.comment        0x00000000       0x2a
+ *(.comment)
+ .comment       0x00000000       0x2a main.o
+                                 0x2b (size before relaxing)
+ .comment       0x00000000       0x2b i2clib.o
+ .comment       0x00000000       0x2b init.o
+ .comment       0x00000000       0x2b ymz.o
+ .comment       0x00000000       0x2b syscalls.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000      0x1c8
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x28 asmfunc.o
+ .debug_aranges
+                0x00000028       0x50 main.o
+ .debug_aranges
+                0x00000078       0x60 i2clib.o
+ .debug_aranges
+                0x000000d8       0x20 init.o
+ .debug_aranges
+                0x000000f8       0x28 ymz.o
+ .debug_aranges
+                0x00000120       0xa8 syscalls.o
+
+.debug_pubnames
+                0x00000000      0x268
+ *(.debug_pubnames)
+ .debug_pubnames
+                0x00000000       0x7b main.o
+ .debug_pubnames
+                0x0000007b       0x9a i2clib.o
+ .debug_pubnames
+                0x00000115       0x24 init.o
+ .debug_pubnames
+                0x00000139       0x2e ymz.o
+ .debug_pubnames
+                0x00000167      0x101 syscalls.o
+
+.debug_info     0x00000000     0x14fd
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x00000000       0x51 asmfunc.o
+ .debug_info    0x00000051      0x158 main.o
+ .debug_info    0x000001a9      0x26e i2clib.o
+ .debug_info    0x00000417       0x3e init.o
+ .debug_info    0x00000455       0xb1 ymz.o
+ .debug_info    0x00000506      0xff7 syscalls.o
+
+.debug_abbrev   0x00000000      0x544
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000       0x12 asmfunc.o
+ .debug_abbrev  0x00000012      0x100 main.o
+ .debug_abbrev  0x00000112      0x151 i2clib.o
+ .debug_abbrev  0x00000263       0x2b init.o
+ .debug_abbrev  0x0000028e       0x8d ymz.o
+ .debug_abbrev  0x0000031b      0x229 syscalls.o
+
+.debug_line     0x00000000      0x763
+ *(.debug_line)
+ .debug_line    0x00000000      0x12f asmfunc.o
+ .debug_line    0x0000012f      0x106 main.o
+ .debug_line    0x00000235      0x17c i2clib.o
+ .debug_line    0x000003b1       0x64 init.o
+ .debug_line    0x00000415       0x61 ymz.o
+ .debug_line    0x00000476      0x2ed syscalls.o
+
+.debug_frame    0x00000000      0x340
+ *(.debug_frame)
+ .debug_frame   0x00000000       0xb8 main.o
+ .debug_frame   0x000000b8       0xc8 i2clib.o
+ .debug_frame   0x00000180       0x20 init.o
+ .debug_frame   0x000001a0       0x38 ymz.o
+ .debug_frame   0x000001d8      0x168 syscalls.o
+
+.debug_str      0x00000000      0x6d7
+ *(.debug_str)
+ .debug_str     0x00000000       0x8a main.o
+                                 0xa2 (size before relaxing)
+ .debug_str     0x0000008a       0x8f i2clib.o
+                                 0xe1 (size before relaxing)
+ .debug_str     0x00000119       0x15 init.o
+                                 0x43 (size before relaxing)
+ .debug_str     0x0000012e       0x28 ymz.o
+                                 0x5c (size before relaxing)
+ .debug_str     0x00000156      0x581 syscalls.o
+                                0x63f (size before relaxing)
+
+.debug_loc      0x00000000      0x798
+ *(.debug_loc)
+ .debug_loc     0x00000000      0x12c main.o
+ .debug_loc     0x0000012c      0x1f9 i2clib.o
+ .debug_loc     0x00000325       0xa3 ymz.o
+ .debug_loc     0x000003c8      0x3d0 syscalls.o
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+OUTPUT(main.elf elf32-littlearm)
+
+.debug_ranges   0x00000000      0x170
+ .debug_ranges  0x00000000       0x20 asmfunc.o
+ .debug_ranges  0x00000020       0x40 main.o
+ .debug_ranges  0x00000060       0x50 i2clib.o
+ .debug_ranges  0x000000b0       0x10 init.o
+ .debug_ranges  0x000000c0       0x18 ymz.o
+ .debug_ranges  0x000000d8       0x98 syscalls.o
+
+.debug_pubtypes
+                0x00000000      0x18f
+ .debug_pubtypes
+                0x00000000      0x18f syscalls.o
+
+Cross Reference Table
+
+Symbol                                            File
+CPU_Initialize                                    main.o
+ClearVector                                       asmfunc.o
+Delay                                             main.o
+                                                  i2clib.o
+DispatchTask                                      asmfunc.o
+FiqDisable                                        asmfunc.o
+FiqEnable                                         asmfunc.o
+GPIOResetInit                                     init.o
+                                                  main.o
+IrqDisable                                        asmfunc.o
+IrqEnable                                         asmfunc.o
+                                                  main.o
+Isr_TIMER0                                        main.o
+Load_Block                                        asmfunc.o
+OV7670                                            i2clib.o
+RegisterVector                                    asmfunc.o
+                                                  main.o
+SCCBByteWrite                                     i2clib.o
+SCCBwrite                                         i2clib.o
+Sleep                                             asmfunc.o
+StartTask                                         asmfunc.o
+Store_Block                                       asmfunc.o
+UARTGetch                                         syscalls.o
+UARTPutch                                         syscalls.o
+__bss_end__                                       asmfunc.o
+__bss_start__                                     asmfunc.o
+__exidx_end                                       syscalls.o
+__exidx_start                                     syscalls.o
+_close                                            syscalls.o
+_close_r                                          syscalls.o
+_data                                             asmfunc.o
+_edata                                            asmfunc.o
+_etext                                            asmfunc.o
+_exit                                             syscalls.o
+_fstat                                            syscalls.o
+_fstat_r                                          syscalls.o
+_getpid                                           syscalls.o
+_isatty                                           syscalls.o
+_kill                                             syscalls.o
+_lseek                                            syscalls.o
+_lseek_r                                          syscalls.o
+_open                                             syscalls.o
+_read                                             syscalls.o
+_read_r                                           syscalls.o
+_sbrk                                             syscalls.o
+_sbrk_r                                           syscalls.o
+_write                                            syscalls.o
+_write_r                                          syscalls.o
+end                                               syscalls.o
+fiqregist                                         main.o
+i2cErr                                            i2clib.o
+                                                  main.o
+i2cmasterset                                      i2clib.o
+i2crestart                                        i2clib.o
+i2csender                                         i2clib.o
+i2cstart                                          i2clib.o
+i2cstop                                           i2clib.o
+i2enable                                          i2clib.o
+                                                  main.o
+isatty                                            syscalls.o
+issrgetbit                                        main.o
+main                                              main.o
+                                                  asmfunc.o
+vi2c                                              i2clib.o
+                                                  main.o
+ymzinit                                           main.o
+ymzwrite0                                         ymz.o
+                                                  main.o
+ymzwrite1                                         ymz.o
+                                                  main.o
