@@ -1,7 +1,11 @@
 #include "lpc23xx.h"
 #include "interrupt.h"
+#include "target.h"
 #include "i2c.h"
 #include "i2cErr.h"
+#include "uart.h"
+#include "integer.h"
+#include <stdio.h>
 
 #define TIMER0_INT_BIT  (0x00000010)
 
@@ -13,57 +17,18 @@ extern void GPIOResetInit(void);
 
 int i2cErr;
 
-void CPU_Initialize(void)
+
+
+void UARTint (void)
 {
-	/*** PLLクロック発振初期化 ***/
-
-	/* すでにPLLが動作中だった場合は停止させる */
-	if ( PLLSTAT & (1<<25) ) {
-		/* PLLCON - PLL Enable & disconnected */
-		PLLCON   =0x00000001;
-		/* PLL Feed operation */
-		PLLFEED  =0x000000AA;
-		PLLFEED  =0x00000055;
-	}
-	/* PLLCON - PLL Disable & disconnected*/
-	PLLCON   =0x00000000;
-	/* PLL Feed operation */
-	PLLFEED  =0x000000AA;
-	PLLFEED  =0x00000055;
-
-	SCS = 0x21;	/* 12MHz OSC Enable & FGPIO Select */
-	while((SCS&0x40) == 0){}	/* OSCSTAT Wait */
-
-	/* CLKSRCSEL - MASTER oscillator select */
-	CLKSRCSEL=0x00000001;
-
-	/* PLLCFG - MCLK=12MHz use, FCC0 = 288MHz M=144,N=12 */
-	PLLCFG   =0x000B008F;
-	/* PLL Feed operation. */
-	PLLFEED  =0x000000AA;
-	PLLFEED  =0x00000055;
-
-	/* PLLCON - PLL Enable & disconnected */
-	PLLCON   =0x00000001;
-	/* PLL Feed operation */
-	PLLFEED  =0x000000AA;
-	PLLFEED  =0x00000055;
-
-	/* CPU Clock Divider 1/4 */
-	CCLKCFG  =0x00000003;
-	/* USB Clock Divider 1/6 */
-	USBCLKCFG=0x00000005;
-
-	while ( ((PLLSTAT & (1<<26)) == 0) ); /* Check lock bit status */
-
-	/* PLLCON - PLL Enable & Connected */
-	PLLCON   =0x00000003;
-	/* PLL Feed operation. */
-	PLLFEED  =0x000000AA;
-	PLLFEED  =0x00000055;
-	while ( ((PLLSTAT & (1<<25)) == 0) ); /* Check connect bit status */
+  DWORD Fdiv, i = 0;
+  U0LCR = 0x83;			/* 8 bits, no Parity, 1 Stop bit */
+  Fdiv = (Fpclk / 16) / UART_BAUD;	/*baud rate */
+  U0DLM = Fdiv / 256;
+  U0DLL = Fdiv % 256;
+  U0LCR = 0x03;			/* DLAB = 0 */
+  U0FCR = 0x07;			/* Enable and reset TX and RX FIFO. */
 }
-
 
 void Delay(volatile unsigned long nCount)
 {
@@ -107,6 +72,12 @@ void Isr_TIMER0 (void)
 		ymzwrite0(twel,0);
 	T0IR = 1;
 }
+void TIMER0_handler (void)
+{
+	FIO1PIN ^=0x00040000;
+	printf("1");
+	T0IR = 1;
+}
 
 void ymzinit(void)
 {
@@ -125,7 +96,7 @@ void fiqregist(void)
 	T0MCR = 0x00000003;      /* Match時にTCクリア & 割り込み */
 	VICIntEnable = TIMER0_INT_BIT;
 
-	RegisterVector(TIMER0_INT, Isr_TIMER0, PRI_LOWEST, CLASS_IRQ);
+	RegisterVector(TIMER0_INT, TIMER0_handler, PRI_LOWEST, CLASS_IRQ);
 	IrqEnable();
 
 	T0TCR = 1;
@@ -135,19 +106,22 @@ int main(void)
 {
 	SCS = SCS | 1;
 
-	CPU_Initialize();
+	TargetResetInit();
 	GPIOResetInit();
+	UARTint();
 	FIO2DIR1 =2;
 	FIO1DIR =0x00040000;
+	FIO1PIN =0x00000000;
 	FIO1MASK=0x00000000;
 
-	ymzinit();
-	ymzwrite0(0x6ff,0);
-	i2enable();
+	printf("hy");
+	//ymzinit();
+	//ymzwrite0(0x6ff,0);
+	//i2enable();
 	PCONP |= 0x00001000;
-	FIO1PIN =0x00040000;
-	vi2c();
 	FIO1PIN =0x00000000;
 	fiqregist();
+	for(int i;i!=100;i++)
+		printf("Hello,World%d\n",i);
 	while(1);
 }

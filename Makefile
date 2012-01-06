@@ -54,8 +54,10 @@ TARGET = main
 # use file-extension c for "c-only"-files
 SRC =  main.c\
        i2clib.c\
-       init.c\
        ymz.c\
+       uart.c\
+       target.c\
+       irq.c\
        syscalls.c
 
 
