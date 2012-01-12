@@ -218,14 +218,14 @@ FIQ_Handler:
 	MOV	LR, PC
 	BX	R0
 
-	MSR	CPSR_c, #M_IRQ | B_Irq	@ Enter IRQ mode and disable Irq
-	LDMIA	SP!, {R0-R3,IP,LR}	@ Restore scratch/used registers and SPSR
+	MSR	CPSR_c, #M_FIQ | B_Fiq	@ Enter IRQ mode and disable Irq
+	LDMFD	SP!, {R0-R3,IP,LR}	@ Restore scratch/used registers and SPSR
 	MSR	SPSR_cxsf, LR		@ Restore SPSR_irq
 
 	LDR	LR, =LPC_BASE_VIC	@ Issue EOI command to the VIC
 	STR	LR, [LR, #VIC_Address]
 
-	LDMIA	SP!, {PC}^		@ Reruen from the IRQ handler
+	LDMFD	SP!, {PC}^		@ Reruen from the IRQ handler
 
 
 
@@ -294,6 +294,7 @@ ClearVect:
 	MOVS	PC, LR
 
 RegVect:
+@interrupt source:R0, Corresponding handler:R1, Priority:R2, Irq or Fiq:R3
 	CMP	R0, #32				@ Range check
 	MOVCSS	PC, LR
 	LDR	IP, =(LPC_BASE_VIC+VIC_VectAddr0)

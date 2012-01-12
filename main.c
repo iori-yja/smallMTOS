@@ -144,7 +144,7 @@ int main(void)
 	//ymzwrite0(0x6ff,0);
 	//i2enable();
 	irqregist(TIMER0_INT,TIMER0_handler);
-	irqregist(TIMER1_INT,TIMER1_handler);
+	fiqregist(TIMER1_INT,TIMER1_handler);
 	timer0setup();
 	timer1setup();
 	for(int i=0;i!=100;i++)
