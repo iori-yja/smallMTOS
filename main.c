@@ -17,7 +17,34 @@ extern void ymzwrite1(int,int);
 int i2cErr;
 
 
+typedef struct {
+	int hashval;
+	int pid;
+	int*regfp;
+	int*regsp;
+	int*functionpointer;
+	int status;
+}process_t;
 
+typedef struct _run{
+	struct _run*next;
+	process_t p;
+	int tic;
+}run_t;
+
+int create_task(int*functionpointer)
+{
+	int pid=1;
+	return pid;
+}
+int kill_task(int pid)
+{
+	return 1;
+}
+int run_task(int pid)
+{
+	return 1;
+}
 void UARTint (void)
 {
   DWORD Fdiv = 0;
@@ -113,19 +140,6 @@ void fiqregist(char sourcenum, void*handler)
 	VICIntEnable |= 1<<sourcenum;
 	RegisterVector(sourcenum, handler, PRI_LOWEST, CLASS_IRQ);
 	FiqEnable();
-}
-int create_task(int*functionpointer)
-{
-	int pid=1;
-	return pid;
-}
-int kill_task(int*functionpointer)
-{
-	return 1;
-}
-int run_task(int*functionpointer)
-{
-	return 1;
 }
 int main(void)
 {

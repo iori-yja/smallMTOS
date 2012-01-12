@@ -106,6 +106,7 @@ i2cErr              0x4               main.o
 Discarded input sections
 
  .data          0x00000000        0x0 asmfunc.o
+ .bss           0x00000000        0x0 asmfunc.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
@@ -119,11 +120,11 @@ Discarded input sections
                 0x00000000        0x8 main.o
  .text.run_task
                 0x00000000        0x8 main.o
- .bss.twel.2918
+ .bss.twel.2931
                 0x00000000        0x4 main.o
- .bss.state.2919
+ .bss.state.2932
                 0x00000000        0x4 main.o
- .bss.bit.2917  0x00000000        0x4 main.o
+ .bss.bit.2930  0x00000000        0x4 main.o
  COMMON         0x00000000        0x4 main.o
  .text          0x00000000        0x0 i2clib.o
  .data          0x00000000        0x0 i2clib.o
@@ -302,267 +303,265 @@ LOAD /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a
 LOAD /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a
 END GROUP
 
-.text           0x00000000     0xae40
+.text           0x00000000     0xadd8
  *(.VECTOR)
  .VECTOR        0x00000000       0x40 asmfunc.o
  *(.text .text.*)
- .text          0x00000040      0x3c0 asmfunc.o
+ .text          0x00000040      0x354 asmfunc.o
                 0x00000220                IrqDisable
                 0x00000228                IrqEnable
                 0x00000230                FiqDisable
                 0x00000238                FiqEnable
                 0x00000240                ClearVector
                 0x00000248                RegisterVector
-                0x00000250                StartTask
-                0x00000264                DispatchTask
-                0x00000298                Sleep
-                0x000002b8                Load_Block
-                0x00000328                Store_Block
+                0x00000250                Load_Block
+                0x000002c0                Store_Block
  .text.TIMER1_handler
-                0x00000400       0x38 main.o
-                0x00000400                TIMER1_handler
+                0x00000394       0x38 main.o
+                0x00000394                TIMER1_handler
  .text.TIMER0_handler
-                0x00000438       0x38 main.o
-                0x00000438                TIMER0_handler
- .text.UARTint  0x00000470       0x34 main.o
-                0x00000470                UARTint
+                0x000003cc       0x38 main.o
+                0x000003cc                TIMER0_handler
+ .text.UARTint  0x00000404       0x34 main.o
+                0x00000404                UARTint
  .text.timer0setup
-                0x000004a4       0x2c main.o
-                0x000004a4                timer0setup
+                0x00000438       0x2c main.o
+                0x00000438                timer0setup
  .text.timer1setup
-                0x000004d0       0x30 main.o
-                0x000004d0                timer1setup
+                0x00000464       0x30 main.o
+                0x00000464                timer1setup
  .text.irqregist
-                0x00000500       0x54 main.o
-                0x00000500                irqregist
+                0x00000494       0x54 main.o
+                0x00000494                irqregist
  .text.fiqregist
-                0x00000554       0x54 main.o
-                0x00000554                fiqregist
- .text.main     0x000005a8       0x9c main.o
-                0x000005a8                main
+                0x000004e8       0x54 main.o
+                0x000004e8                fiqregist
+ .text.main     0x0000053c       0x9c main.o
+                0x0000053c                main
  .text.i2enable
-                0x00000644       0x14 i2clib.o
-                0x00000644                i2enable
+                0x000005d8       0x14 i2clib.o
+                0x000005d8                i2enable
  .text.UARTPutch
-                0x00000658       0x3c uart.o
-                0x00000658                UARTPutch
+                0x000005ec       0x3c uart.o
+                0x000005ec                UARTPutch
  .text.UARTGetch
-                0x00000694       0x48 uart.o
-                0x00000694                UARTGetch
+                0x00000628       0x48 uart.o
+                0x00000628                UARTGetch
  .text.TargetInit
-                0x000006dc       0x24 target.o
-                0x000006dc                TargetInit
+                0x00000670       0x24 target.o
+                0x00000670                TargetInit
  .text.GPIOResetInit
-                0x00000700       0xdc target.o
-                0x00000700                GPIOResetInit
+                0x00000694       0xdc target.o
+                0x00000694                GPIOResetInit
  .text.ConfigurePLL
-                0x000007dc       0xfc target.o
-                0x000007dc                ConfigurePLL
+                0x00000770       0xfc target.o
+                0x00000770                ConfigurePLL
  .text.TargetResetInit
-                0x000008d8       0x58 target.o
-                0x000008d8                TargetResetInit
+                0x0000086c       0x58 target.o
+                0x0000086c                TargetResetInit
  .text.init_VIC
-                0x00000930       0x40 irq.o
-                0x00000930                init_VIC
- .text._read_r  0x00000970       0x60 syscalls.o
-                0x00000970                _read_r
+                0x000008c4       0x40 irq.o
+                0x000008c4                init_VIC
+ .text._read_r  0x00000904       0x60 syscalls.o
+                0x00000904                _read_r
  .text._write_r
-                0x000009d0       0x4c syscalls.o
-                0x000009d0                _write_r
+                0x00000964       0x4c syscalls.o
+                0x00000964                _write_r
  .text._close_r
-                0x00000a1c        0x8 syscalls.o
-                0x00000a1c                _close_r
+                0x000009b0        0x8 syscalls.o
+                0x000009b0                _close_r
  .text._lseek_r
-                0x00000a24        0x8 syscalls.o
-                0x00000a24                _lseek_r
+                0x000009b8        0x8 syscalls.o
+                0x000009b8                _lseek_r
  .text._fstat_r
-                0x00000a2c       0x10 syscalls.o
-                0x00000a2c                _fstat_r
- .text._sbrk_r  0x00000a3c       0x2c syscalls.o
-                0x00000a3c                _sbrk_r
- .text._isatty  0x00000a68        0x8 syscalls.o
-                0x00000a68                _isatty
- .text          0x00000a70       0x74 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-printf.o)
-                0x00000a70                _printf_r
-                0x00000aa4                printf
- .text          0x00000ae4       0x3c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-putchar.o)
-                0x00000ae4                _putchar_r
-                0x00000af8                putchar
- .text          0x00000b20       0xb4 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-puts.o)
-                0x00000b20                _puts_r
-                0x00000bc0                puts
- .text          0x00000bd4       0x60 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-strlen.o)
-                0x00000bd4                strlen
- .text          0x00000c34     0x22e8 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-vfprintf.o)
-                0x00000c34                _vfprintf_r
-                0x00002ef0                vfprintf
- .text          0x00002f1c      0x134 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-wsetup.o)
-                0x00002f1c                __swsetup_r
- .text          0x00003050     0x17c0 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-dtoa.o)
-                0x00003220                _dtoa_r
- .text          0x00004810      0x298 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-fflush.o)
-                0x00004810                _fflush_r
-                0x00004a68                fflush
- .text          0x00004aa8      0x334 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-findfp.o)
-                0x00004ab8                _cleanup_r
-                0x00004ad0                __sfmoreglue
-                0x00004b18                _cleanup
-                0x00004b28                __sinit
-                0x00004c90                __sfp
-                0x00004d84                __sfp_lock_acquire
-                0x00004d88                __sfp_lock_release
-                0x00004d8c                __sinit_lock_acquire
-                0x00004d90                __sinit_lock_release
-                0x00004d94                __fp_lock_all
-                0x00004db8                __fp_unlock_all
- .text          0x00004ddc      0x360 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-freer.o)
-                0x00004ddc                _malloc_trim_r
-                0x00004ed8                _free_r
- .text          0x0000513c      0x4b0 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-fvwrite.o)
-                0x0000513c                __sfvwrite_r
- .text          0x000055ec      0x10c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-fwalk.o)
-                0x000055ec                _fwalk
-                0x00005670                _fwalk_reent
- .text          0x000056f8       0xd0 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-locale.o)
-                0x000056f8                _setlocale_r
-                0x00005764                __locale_charset
-                0x00005770                __locale_mb_cur_max
-                0x00005780                __locale_msgcharset
-                0x0000578c                __locale_cjk_lang
-                0x00005794                _localeconv_r
-                0x000057a0                setlocale
-                0x000057bc                localeconv
- .text          0x000057c8      0x164 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-makebuf.o)
-                0x000057c8                __smakebuf_r
- .text          0x0000592c      0x70c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-mallocr.o)
-                0x0000592c                _malloc_r
- .text          0x00006038      0x100 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-memchr.o)
-                0x00006038                memchr
- .text          0x00006138      0x1c0 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-memcpy.o)
-                0x00006138                memcpy
- .text          0x000062f8      0x118 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-memmove.o)
-                0x000062f8                memmove
- .text          0x00006410      0x100 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-memset.o)
-                0x00006410                memset
- .text          0x00006510        0x8 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-mlock.o)
-                0x00006510                __malloc_lock
-                0x00006514                __malloc_unlock
- .text          0x00006518      0xd1c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-mprec.o)
-                0x00006518                _Balloc
-                0x000065a0                _Bfree
-                0x000065bc                __multadd
-                0x00006698                __s2b
-                0x00006780                __hi0bits
-                0x000067d0                __lo0bits
-                0x00006860                __i2b
-                0x00006884                __multiply
-                0x00006a74                __pow5mult
-                0x00006b68                __lshift
-                0x00006c6c                __mcmp
-                0x00006ccc                __mdiff
-                0x00006e24                __ulp
-                0x00006e84                __b2d
-                0x00006f4c                __d2b
-                0x00007054                __ratio
-                0x000070e4                _mprec_log10
-                0x00007138                __copybits
-                0x000071ac                __any_on
- .text          0x00007234      0x168 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-putc.o)
-                0x00007234                _putc_r
-                0x000072e0                putc
- .text          0x0000739c      0x5c0 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-reallocr.o)
-                0x0000739c                _realloc_r
- .text          0x0000795c       0x8c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-s_fpclassify.o)
-                0x0000795c                __fpclassifyd
- .text          0x000079e8       0xdc /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-stdio.o)
-                0x000079e8                __sread
-                0x00007a1c                __seofread
-                0x00007a24                __swrite
-                0x00007a7c                __sseek
-                0x00007ab0                __sclose
- .text          0x00007ac4      0x230 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-strcmp.o)
-                0x00007ac4                strcmp
- .text          0x00007cf4     0x1360 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-vfiprintf.o)
-                0x00007cf4                __sprint_r
-                0x00007db4                _vfiprintf_r
-                0x00009028                vfiprintf
- .text          0x00009054      0x15c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-wbuf.o)
-                0x00009054                __swbuf_r
-                0x00009194                __swbuf
- .text          0x000091b0       0x9c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-callocr.o)
-                0x000091b0                _calloc_r
- .text          0x0000924c      0x10c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-fclose.o)
-                0x0000924c                _fclose_r
-                0x00009344                fclose
- .text          0x00009358      0x1a8 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-fputwc.o)
-                0x00009358                _fputwc_r
-                0x000094b4                fputwc
- .text          0x00009500       0x3c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-isattyr.o)
-                0x00009500                _isatty_r
- .text          0x0000953c      0x13c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-wcrtomb.o)
-                0x0000953c                _wcrtomb_r
-                0x000095d0                wcrtomb
- .text          0x00009678       0x7c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-wctomb_r.o)
-                0x00009678                __ascii_wctomb
-                0x000096a4                _wctomb_r
- .text          0x000096f4      0x114 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_udivsi3.o)
-                0x000096f4                __udivsi3
-                0x000096f4                __aeabi_uidiv
-                0x000097e8                __aeabi_uidivmod
- .text          0x00009808        0x4 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_dvmd_tls.o)
-                0x00009808                __aeabi_ldiv0
-                0x00009808                __aeabi_idiv0
- .text          0x0000980c      0x41c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_arm_addsubdf3.o)
-                0x0000980c                __aeabi_drsub
-                0x00009814                __aeabi_dsub
-                0x00009814                __subdf3
-                0x00009818                __adddf3
-                0x00009818                __aeabi_dadd
-                0x00009b28                __aeabi_ui2d
-                0x00009b28                __floatunsidf
-                0x00009b4c                __floatsidf
-                0x00009b4c                __aeabi_i2d
-                0x00009b74                __extendsfdf2
-                0x00009b74                __aeabi_f2d
-                0x00009bb4                __aeabi_ul2d
-                0x00009bb4                __floatundidf
-                0x00009bc8                __floatdidf
-                0x00009bc8                __aeabi_l2d
- .text          0x00009c28      0x49c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_arm_muldivdf3.o)
-                0x00009c28                __aeabi_dmul
-                0x00009c28                __muldf3
-                0x00009eb8                __aeabi_ddiv
-                0x00009eb8                __divdf3
- .text          0x0000a0c4      0x144 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_arm_cmpdf2.o)
-                0x0000a0c4                __gtdf2
-                0x0000a0c4                __gedf2
-                0x0000a0cc                __ltdf2
-                0x0000a0cc                __ledf2
-                0x0000a0d4                __cmpdf2
-                0x0000a0d4                __eqdf2
-                0x0000a0d4                __nedf2
-                0x0000a15c                __aeabi_cdrcmple
-                0x0000a178                __aeabi_cdcmple
-                0x0000a178                __aeabi_cdcmpeq
-                0x0000a190                __aeabi_dcmpeq
-                0x0000a1a8                __aeabi_dcmplt
-                0x0000a1c0                __aeabi_dcmple
-                0x0000a1d8                __aeabi_dcmpge
-                0x0000a1f0                __aeabi_dcmpgt
- .text          0x0000a208       0x5c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_arm_fixdfsi.o)
-                0x0000a208                __fixdfsi
-                0x0000a208                __aeabi_d2iz
- .text          0x0000a264       0x3c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_aeabi_uldivmod.o)
-                0x0000a264                __aeabi_uldivmod
- .text          0x0000a2a0       0x80 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(bpabi.o)
-                0x0000a2a0                __gnu_ldivmod_helper
-                0x0000a2e0                __gnu_uldivmod_helper
- .text          0x0000a320      0x4a8 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_divdi3.o)
-                0x0000a320                __divdi3
- .text          0x0000a7c8      0x438 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_udivdi3.o)
-                0x0000a7c8                __udivdi3
- .text          0x0000ac00       0x48 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_clzsi2.o)
-                0x0000ac00                __clzsi2
+                0x000009c0       0x10 syscalls.o
+                0x000009c0                _fstat_r
+ .text._sbrk_r  0x000009d0       0x2c syscalls.o
+                0x000009d0                _sbrk_r
+ .text._isatty  0x000009fc        0x8 syscalls.o
+                0x000009fc                _isatty
+ .text          0x00000a04       0x74 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-printf.o)
+                0x00000a04                _printf_r
+                0x00000a38                printf
+ .text          0x00000a78       0x3c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-putchar.o)
+                0x00000a78                _putchar_r
+                0x00000a8c                putchar
+ .text          0x00000ab4       0xb4 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-puts.o)
+                0x00000ab4                _puts_r
+                0x00000b54                puts
+ .text          0x00000b68       0x60 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-strlen.o)
+                0x00000b68                strlen
+ .text          0x00000bc8     0x22e8 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-vfprintf.o)
+                0x00000bc8                _vfprintf_r
+                0x00002e84                vfprintf
+ .text          0x00002eb0      0x134 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-wsetup.o)
+                0x00002eb0                __swsetup_r
+ *fill*         0x00002fe4        0x4 00
+ .text          0x00002fe8     0x17c0 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-dtoa.o)
+                0x000031b8                _dtoa_r
+ .text          0x000047a8      0x298 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-fflush.o)
+                0x000047a8                _fflush_r
+                0x00004a00                fflush
+ .text          0x00004a40      0x334 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-findfp.o)
+                0x00004a50                _cleanup_r
+                0x00004a68                __sfmoreglue
+                0x00004ab0                _cleanup
+                0x00004ac0                __sinit
+                0x00004c28                __sfp
+                0x00004d1c                __sfp_lock_acquire
+                0x00004d20                __sfp_lock_release
+                0x00004d24                __sinit_lock_acquire
+                0x00004d28                __sinit_lock_release
+                0x00004d2c                __fp_lock_all
+                0x00004d50                __fp_unlock_all
+ .text          0x00004d74      0x360 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-freer.o)
+                0x00004d74                _malloc_trim_r
+                0x00004e70                _free_r
+ .text          0x000050d4      0x4b0 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-fvwrite.o)
+                0x000050d4                __sfvwrite_r
+ .text          0x00005584      0x10c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-fwalk.o)
+                0x00005584                _fwalk
+                0x00005608                _fwalk_reent
+ .text          0x00005690       0xd0 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-locale.o)
+                0x00005690                _setlocale_r
+                0x000056fc                __locale_charset
+                0x00005708                __locale_mb_cur_max
+                0x00005718                __locale_msgcharset
+                0x00005724                __locale_cjk_lang
+                0x0000572c                _localeconv_r
+                0x00005738                setlocale
+                0x00005754                localeconv
+ .text          0x00005760      0x164 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-makebuf.o)
+                0x00005760                __smakebuf_r
+ .text          0x000058c4      0x70c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-mallocr.o)
+                0x000058c4                _malloc_r
+ .text          0x00005fd0      0x100 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-memchr.o)
+                0x00005fd0                memchr
+ .text          0x000060d0      0x1c0 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-memcpy.o)
+                0x000060d0                memcpy
+ .text          0x00006290      0x118 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-memmove.o)
+                0x00006290                memmove
+ .text          0x000063a8      0x100 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-memset.o)
+                0x000063a8                memset
+ .text          0x000064a8        0x8 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-mlock.o)
+                0x000064a8                __malloc_lock
+                0x000064ac                __malloc_unlock
+ .text          0x000064b0      0xd1c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-mprec.o)
+                0x000064b0                _Balloc
+                0x00006538                _Bfree
+                0x00006554                __multadd
+                0x00006630                __s2b
+                0x00006718                __hi0bits
+                0x00006768                __lo0bits
+                0x000067f8                __i2b
+                0x0000681c                __multiply
+                0x00006a0c                __pow5mult
+                0x00006b00                __lshift
+                0x00006c04                __mcmp
+                0x00006c64                __mdiff
+                0x00006dbc                __ulp
+                0x00006e1c                __b2d
+                0x00006ee4                __d2b
+                0x00006fec                __ratio
+                0x0000707c                _mprec_log10
+                0x000070d0                __copybits
+                0x00007144                __any_on
+ .text          0x000071cc      0x168 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-putc.o)
+                0x000071cc                _putc_r
+                0x00007278                putc
+ .text          0x00007334      0x5c0 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-reallocr.o)
+                0x00007334                _realloc_r
+ .text          0x000078f4       0x8c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-s_fpclassify.o)
+                0x000078f4                __fpclassifyd
+ .text          0x00007980       0xdc /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-stdio.o)
+                0x00007980                __sread
+                0x000079b4                __seofread
+                0x000079bc                __swrite
+                0x00007a14                __sseek
+                0x00007a48                __sclose
+ .text          0x00007a5c      0x230 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-strcmp.o)
+                0x00007a5c                strcmp
+ .text          0x00007c8c     0x1360 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-vfiprintf.o)
+                0x00007c8c                __sprint_r
+                0x00007d4c                _vfiprintf_r
+                0x00008fc0                vfiprintf
+ .text          0x00008fec      0x15c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-wbuf.o)
+                0x00008fec                __swbuf_r
+                0x0000912c                __swbuf
+ .text          0x00009148       0x9c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-callocr.o)
+                0x00009148                _calloc_r
+ .text          0x000091e4      0x10c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-fclose.o)
+                0x000091e4                _fclose_r
+                0x000092dc                fclose
+ .text          0x000092f0      0x1a8 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-fputwc.o)
+                0x000092f0                _fputwc_r
+                0x0000944c                fputwc
+ .text          0x00009498       0x3c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-isattyr.o)
+                0x00009498                _isatty_r
+ .text          0x000094d4      0x13c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-wcrtomb.o)
+                0x000094d4                _wcrtomb_r
+                0x00009568                wcrtomb
+ .text          0x00009610       0x7c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-wctomb_r.o)
+                0x00009610                __ascii_wctomb
+                0x0000963c                _wctomb_r
+ .text          0x0000968c      0x114 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_udivsi3.o)
+                0x0000968c                __udivsi3
+                0x0000968c                __aeabi_uidiv
+                0x00009780                __aeabi_uidivmod
+ .text          0x000097a0        0x4 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_dvmd_tls.o)
+                0x000097a0                __aeabi_ldiv0
+                0x000097a0                __aeabi_idiv0
+ .text          0x000097a4      0x41c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_arm_addsubdf3.o)
+                0x000097a4                __aeabi_drsub
+                0x000097ac                __aeabi_dsub
+                0x000097ac                __subdf3
+                0x000097b0                __adddf3
+                0x000097b0                __aeabi_dadd
+                0x00009ac0                __aeabi_ui2d
+                0x00009ac0                __floatunsidf
+                0x00009ae4                __floatsidf
+                0x00009ae4                __aeabi_i2d
+                0x00009b0c                __extendsfdf2
+                0x00009b0c                __aeabi_f2d
+                0x00009b4c                __aeabi_ul2d
+                0x00009b4c                __floatundidf
+                0x00009b60                __floatdidf
+                0x00009b60                __aeabi_l2d
+ .text          0x00009bc0      0x49c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_arm_muldivdf3.o)
+                0x00009bc0                __aeabi_dmul
+                0x00009bc0                __muldf3
+                0x00009e50                __aeabi_ddiv
+                0x00009e50                __divdf3
+ .text          0x0000a05c      0x144 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_arm_cmpdf2.o)
+                0x0000a05c                __gtdf2
+                0x0000a05c                __gedf2
+                0x0000a064                __ltdf2
+                0x0000a064                __ledf2
+                0x0000a06c                __cmpdf2
+                0x0000a06c                __eqdf2
+                0x0000a06c                __nedf2
+                0x0000a0f4                __aeabi_cdrcmple
+                0x0000a110                __aeabi_cdcmple
+                0x0000a110                __aeabi_cdcmpeq
+                0x0000a128                __aeabi_dcmpeq
+                0x0000a140                __aeabi_dcmplt
+                0x0000a158                __aeabi_dcmple
+                0x0000a170                __aeabi_dcmpge
+                0x0000a188                __aeabi_dcmpgt
+ .text          0x0000a1a0       0x5c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_arm_fixdfsi.o)
+                0x0000a1a0                __fixdfsi
+                0x0000a1a0                __aeabi_d2iz
+ .text          0x0000a1fc       0x3c /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_aeabi_uldivmod.o)
+                0x0000a1fc                __aeabi_uldivmod
+ .text          0x0000a238       0x80 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(bpabi.o)
+                0x0000a238                __gnu_ldivmod_helper
+                0x0000a278                __gnu_uldivmod_helper
+ .text          0x0000a2b8      0x4a8 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_divdi3.o)
+                0x0000a2b8                __divdi3
+ .text          0x0000a760      0x438 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_udivdi3.o)
+                0x0000a760                __udivdi3
+ .text          0x0000ab98       0x48 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_clzsi2.o)
+                0x0000ab98                __clzsi2
  *(.gnu.linkonce.t.*)
  *(.glue_7)
  .glue_7        0x00000000        0x0 linker stubs
@@ -570,57 +569,57 @@ END GROUP
  .glue_7t       0x00000000        0x0 linker stubs
  *(.gcc_except_table)
  *(.rodata)
- .rodata        0x0000ac48       0x20 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-vfprintf.o)
- .rodata        0x0000ac68        0x4 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-impure.o)
-                0x0000ac68                _global_impure_ptr
- *fill*         0x0000ac6c        0x4 00
- .rodata        0x0000ac70      0x128 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-mprec.o)
-                0x0000ac80                __mprec_tens
-                0x0000ad48                __mprec_bigtens
-                0x0000ad70                __mprec_tinytens
- .rodata        0x0000ad98       0x20 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-vfiprintf.o)
+ .rodata        0x0000abe0       0x20 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-vfprintf.o)
+ .rodata        0x0000ac00        0x4 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-impure.o)
+                0x0000ac00                _global_impure_ptr
+ *fill*         0x0000ac04        0x4 00
+ .rodata        0x0000ac08      0x128 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-mprec.o)
+                0x0000ac18                __mprec_tens
+                0x0000ace0                __mprec_bigtens
+                0x0000ad08                __mprec_tinytens
+ .rodata        0x0000ad30       0x20 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-vfiprintf.o)
  *(.rodata*)
  .rodata.str1.1
-                0x0000adb8       0x1f main.o
- *fill*         0x0000add7        0x1 00
+                0x0000ad50       0x1f main.o
+ *fill*         0x0000ad6f        0x1 00
  .rodata.str1.4
-                0x0000add8        0x2 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-puts.o)
+                0x0000ad70        0x2 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-puts.o)
                                   0x4 (size before relaxing)
- *fill*         0x0000adda        0x2 00
+ *fill*         0x0000ad72        0x2 00
  .rodata.str1.4
-                0x0000addc       0x42 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-vfprintf.o)
+                0x0000ad74       0x42 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-vfprintf.o)
                                  0x44 (size before relaxing)
- *fill*         0x0000ae1e        0x2 00
+ *fill*         0x0000adb6        0x2 00
  .rodata.str1.4
-                0x0000ae20       0x10 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-dtoa.o)
+                0x0000adb8       0x10 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-dtoa.o)
                                  0x14 (size before relaxing)
  .rodata.str1.4
-                0x0000ae30        0x2 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-impure.o)
+                0x0000adc8        0x2 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-impure.o)
                                   0x4 (size before relaxing)
- *fill*         0x0000ae32        0x2 00
+ *fill*         0x0000adca        0x2 00
  .rodata.str1.4
-                0x0000ae34        0xc /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-locale.o)
+                0x0000adcc        0xc /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-locale.o)
                                  0x14 (size before relaxing)
  .rodata.str1.4
                 0x00000000       0x30 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-vfiprintf.o)
  *(.gnu.linkonce.r.*)
-                0x0000ae40                . = ALIGN (0x4)
+                0x0000add8                . = ALIGN (0x4)
 
-.vfp11_veneer   0x0000ae40        0x0
+.vfp11_veneer   0x0000add8        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x0000ae40        0x0
+.v4_bx          0x0000add8        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.ARM.exidx      0x0000ae40        0x8
- .ARM.exidx     0x0000ae40        0x8 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_divdi3.o)
- .ARM.exidx     0x0000ae48        0x0 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_udivdi3.o)
+.ARM.exidx      0x0000add8        0x8
+ .ARM.exidx     0x0000add8        0x8 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_divdi3.o)
+ .ARM.exidx     0x0000ade0        0x0 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/libgcc.a(_udivdi3.o)
                                   0x8 (size before relaxing)
-                0x0000ae48                . = ALIGN (0x4)
-                0x0000ae48                _etext = .
-                0x0000ae48                PROVIDE (etext, .)
+                0x0000ade0                . = ALIGN (0x4)
+                0x0000ade0                _etext = .
+                0x0000ade0                PROVIDE (etext, .)
 
-.data           0x40000000      0x8c0 load address 0x0000ae48
+.data           0x40000000      0x8c0 load address 0x0000ade0
                 0x40000000                _data = .
  *(.data)
  .data          0x40000000      0x430 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-impure.o)
@@ -640,35 +639,34 @@ END GROUP
                 0x400008c0                _edata = .
                 0x400008c0                PROVIDE (edata, .)
 
-.bss            0x400008c0       0x44 load address 0x0000b708
+.bss            0x400008c0       0x3c load address 0x0000b6a0
                 0x400008c0                __bss_start = .
                 0x400008c0                __bss_start__ = .
  *(.bss)
- .bss           0x400008c0        0x8 asmfunc.o
- .bss           0x400008c8       0x34 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-mallocr.o)
-                0x400008c8                __malloc_top_pad
-                0x400008cc                __malloc_current_mallinfo
-                0x400008f4                __malloc_max_sbrked_mem
-                0x400008f8                __malloc_max_total_mem
+ .bss           0x400008c0       0x34 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-mallocr.o)
+                0x400008c0                __malloc_top_pad
+                0x400008c4                __malloc_current_mallinfo
+                0x400008ec                __malloc_max_sbrked_mem
+                0x400008f0                __malloc_max_total_mem
  *(.bss.*)
- .bss.heap_ptr  0x400008fc        0x4 syscalls.o
+ .bss.heap_ptr  0x400008f4        0x4 syscalls.o
  *(.gnu.linkonce.b*)
  *(COMMON)
- COMMON         0x40000900        0x4 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-reent.o)
-                0x40000900                errno
-                0x40000904                . = ALIGN (0x4)
-                0x40000904                . = ALIGN (0x4)
-                0x40000904                __bss_end__ = .
-                0x40000904                PROVIDE (__bss_end, .)
+ COMMON         0x400008f8        0x4 /opt/CodeSourcery/bin/../lib/gcc/arm-none-eabi/4.5.1/../../../../arm-none-eabi/lib/libc.a(lib_a-reent.o)
+                0x400008f8                errno
+                0x400008fc                . = ALIGN (0x4)
+                0x400008fc                . = ALIGN (0x4)
+                0x400008fc                __bss_end__ = .
+                0x400008fc                PROVIDE (__bss_end, .)
 
-.stack          0x40000908      0xb00
+.stack          0x40000900      0xb00
  *(.stack)
  *(.STACK)
- .STACK         0x40000908      0xb00 asmfunc.o
-                0x40001408                PROVIDE (_stack, .)
-                0x40001408                . = ALIGN (0x4)
-                0x40001408                _end = .
-                0x40001408                PROVIDE (end, .)
+ .STACK         0x40000900      0xb00 asmfunc.o
+                0x40001400                PROVIDE (_stack, .)
+                0x40001400                . = ALIGN (0x4)
+                0x40001400                _end = .
+                0x40001400                PROVIDE (end, .)
 
 .usbram         0x7fd00000        0x0
                 0x7fd00000                __usbram_start = .
@@ -904,16 +902,16 @@ END GROUP
  .debug_abbrev  0x000004b0       0xc0 irq.o
  .debug_abbrev  0x00000570      0x229 syscalls.o
 
-.debug_line     0x00000000      0x992
+.debug_line     0x00000000      0x976
  *(.debug_line)
- .debug_line    0x00000000      0x13c asmfunc.o
- .debug_line    0x0000013c      0x184 main.o
- .debug_line    0x000002c0      0x17c i2clib.o
- .debug_line    0x0000043c       0x61 ymz.o
- .debug_line    0x0000049d       0xa8 uart.o
- .debug_line    0x00000545       0xe5 target.o
- .debug_line    0x0000062a       0x7b irq.o
- .debug_line    0x000006a5      0x2ed syscalls.o
+ .debug_line    0x00000000      0x120 asmfunc.o
+ .debug_line    0x00000120      0x184 main.o
+ .debug_line    0x000002a4      0x17c i2clib.o
+ .debug_line    0x00000420       0x61 ymz.o
+ .debug_line    0x00000481       0xa8 uart.o
+ .debug_line    0x00000529       0xe5 target.o
+ .debug_line    0x0000060e       0x7b irq.o
+ .debug_line    0x00000689      0x2ed syscalls.o
 
 .debug_frame    0x00000000     0x11b8
  *(.debug_frame)
@@ -1037,7 +1035,6 @@ ClearVector                                       asmfunc.o
 ConfigurePLL                                      target.o
 Delay                                             main.o
                                                   i2clib.o
-DispatchTask                                      asmfunc.o
 FiqDisable                                        asmfunc.o
                                                   main.o
 FiqEnable                                         asmfunc.o
@@ -1054,8 +1051,6 @@ RegisterVector                                    asmfunc.o
                                                   main.o
 SCCBByteWrite                                     i2clib.o
 SCCBwrite                                         i2clib.o
-Sleep                                             asmfunc.o
-StartTask                                         asmfunc.o
 Store_Block                                       asmfunc.o
 TIMER0_handler                                    main.o
 TIMER1_handler                                    main.o

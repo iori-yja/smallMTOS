@@ -2,3 +2,7 @@
 /jtag
 *.hex
 *.elf
+*
+!*.c
+!*.S
+!Makefile
