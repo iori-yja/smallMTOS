@@ -1,12 +1,13 @@
 @-----------------------------------------------------------@
 @ LPC2300 startup code and asm functions (C)ChaN, 2008
+@ IRQ Handler added by Iori.y.ja, Jan,2012
 @-----------------------------------------------------------@
 
 
 .equ UND_Stack_Size,	0
 .equ SVC_Stack_Size,	256	@ Used by ISRs and SWIs
 .equ ABT_Stack_Size,	0
-.equ FIQ_Stack_Size,	0	@ Used by FIQ handler
+.equ FIQ_Stack_Size,	256	@ Used by FIQ handler
 .equ IRQ_Stack_Size,	256	@ Requres ISR nesting level * 28 bytes
 .equ USR_Stack_Size,	2048	@ Used by user mode programs
 .equ Stack_Size,	(UND_Stack_Size + SVC_Stack_Size + ABT_Stack_Size + \
@@ -64,7 +65,7 @@ HeapMem:
 	LDR	PC, [PC, #24]	@ SWI entry, jump to SWI handler
 	LDR	PC, [PC, #24]	@ PAbt entry, trap
 	LDR	PC, [PC, #24]	@ DAbt entry, trap
-	.word	0
+	.word	0		@ Reserved
 	LDR	PC, [PC, #20]	@ IRQ entry, jump to IRQ handler
 	LDR     PC, [PC, #20]	@ FIQ entry, trap
 
@@ -74,7 +75,7 @@ HeapMem:
 	.word	Trap		@ Prefetch Abort handler
 	.word	Trap		@ Data Abort handler
 	.word	IRQ_Handler	@ IRQ handler
-	.word	Trap		@ FIQ handler
+	.word	FIQ_Handler	@ FIQ handler
 
 Trap:	B	Trap		@ Unused exception trap (infinite loop)
 
@@ -172,7 +173,7 @@ MTrap:	B	MTrap	@ Trap if main() terminated
 .equ VIC_SWPriorityMask,0x024
 .equ VIC_VectAddr0,	0x100
 .equ VIC_VectPriority0,	0x200
-.equ VIC_VectAddr,	0xF00
+.equ VIC_Address,	0xF00
 
 .section .text, "ax"
 .arm
@@ -183,20 +184,46 @@ IRQ_Handler:
 	MRS	LR, SPSR		@ Save SPSR need to be saved for nested interrupt
 	STMFD	SP!, {R0-R3,IP,LR}	@ Push scratch/used registers and SPSR
 	LDR	R0, =LPC_BASE_VIC	@ Get the ISR address pointed by VIC_VectAddr
-	LDR	R0, [R0, #VIC_VectAddr]
-	MSR	CPSR_c, #M_SVC		@ Enter SVC mode and enable Irq and Fiq
+	LDR	R0, [R0, #VIC_Address]
 
-	STMFD	SP!, {LR}		@ Call the ISR
 	MOV	LR, PC
 	BX	R0
-	LDMIA	SP!, {LR}
+
+	MSR	CPSR_c, #M_IRQ | B_Irq	@ Enter IRQ mode and disable Irq
+	LDMFD	SP!, {R0-R3,IP,LR}	@ Restore scratch/used registers and SPSR
+	MSR	SPSR_cxsf, LR		@ Restore SPSR_irq
+
+	LDR	LR, =LPC_BASE_VIC	@ Issue EOI command to the VIC
+	STR	LR, [LR, #VIC_Address]
+
+	LDMFD	SP!, {PC}^		@ Reruen from the IRQ handler
+
+
+@-----------------------------------------------------------@
+@ FIQ Handler
+@ Prologue and Epilog for all ISRs are handled here
+@-----------------------------------------------------------@
+
+.section .text, "ax"
+.arm
+FIQ_Handler:
+	SUB	LR, LR, #4		@ Adjust LR_fiq and push it
+	STMFD	SP!, {LR}
+
+	MRS	LR, SPSR		@ Save SPSR need to be saved for nested interrupt
+	STMFD	SP!, {R0-R3,IP,LR}	@ Push scratch/used registers and SPSR
+	LDR	R0, =LPC_BASE_VIC	@ Get the ISR address pointed by VIC_VectAddr
+	LDR	R0, [R0, #VIC_Address]
+
+	MOV	LR, PC
+	BX	R0
 
 	MSR	CPSR_c, #M_IRQ | B_Irq	@ Enter IRQ mode and disable Irq
 	LDMIA	SP!, {R0-R3,IP,LR}	@ Restore scratch/used registers and SPSR
 	MSR	SPSR_cxsf, LR		@ Restore SPSR_irq
 
 	LDR	LR, =LPC_BASE_VIC	@ Issue EOI command to the VIC
-	STR	LR, [LR, #VIC_VectAddr]
+	STR	LR, [LR, #VIC_Address]
 
 	LDMIA	SP!, {PC}^		@ Reruen from the IRQ handler
 
@@ -263,7 +290,7 @@ ClearVect:
 	STR	R0, [IP, #VIC_SWPriorityMask]
 	MOV	R0, #1				@ Enable protection
 	STR	R0, [IP, #VIC_Protection]
-	STR	R0, [IP, #VIC_VectAddr]		@ Issule EOI command
+	STR	R0, [IP, #VIC_Address]		@ Issule EOI command
 	MOVS	PC, LR
 
 RegVect:

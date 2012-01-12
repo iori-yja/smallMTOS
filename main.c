@@ -13,7 +13,6 @@ extern void vi2c(void);
 extern void i2enable(void);
 extern void ymzwrite0(int,int);
 extern void ymzwrite1(int,int);
-extern void GPIOResetInit(void);
 
 int i2cErr;
 
@@ -21,7 +20,7 @@ int i2cErr;
 
 void UARTint (void)
 {
-  DWORD Fdiv, i = 0;
+  DWORD Fdiv = 0;
   U0LCR = 0x83;			/* 8 bits, no Parity, 1 Stop bit */
   Fdiv = (Fpclk / 16) / UART_BAUD;	/*baud rate */
   U0DLM = Fdiv / 256;
@@ -62,21 +61,17 @@ int issrgetbit(void)
 	}
 	return ret;
 }
-/* IRQ 割り込み処理 */
-void Isr_TIMER0 (void)
-{
-	int twel;
-	FIO1PIN ^=0x00040000;
-	twel = issrgetbit();
-	if ( twel != -1)
-		ymzwrite0(twel,0);
-	T0IR = 1;
-}
 void TIMER0_handler (void)
 {
 	FIO1PIN ^=0x00040000;
 	printf("1");
 	T0IR = 1;
+}
+void TIMER1_handler (void)
+{
+	FIO1PIN ^=0x00040000;
+	printf("2");
+	T1IR = 1;
 }
 
 void ymzinit(void)
@@ -85,23 +80,53 @@ void ymzinit(void)
 	ymzwrite1(0xF,0x8);
 	ymzwrite1(0xFe,0x7);
 }
-void fiqregist(void)
+void timer0setup(void)
 {
-	/* Use IRQ instead of FIQ */
-	VICIntSelect = 0;
-
 	T0PR = 0x00000000;
 	/*  *TIMER0_MatchRegister0       = 0x00080000; */
 	T0MR0 = 0x00010000;
 	T0MCR = 0x00000003;      /* Match時にTCクリア & 割り込み */
-	VICIntEnable = TIMER0_INT_BIT;
-
-	RegisterVector(TIMER0_INT, TIMER0_handler, PRI_LOWEST, CLASS_IRQ);
-	IrqEnable();
-
 	T0TCR = 1;
 }
-
+void timer1setup(void)
+{
+	T1PR = 0x00000000;
+	/*  *TIMER0_MatchRegister0       = 0x00080000; */
+	T1MR0 = 0x00020300;
+	T1MCR = 0x00000003;      /* Match時にTCクリア & 割り込み */
+	T1TCR = 1;
+}
+void irqregist(char sourcenum,void*handler)
+{
+	IrqDisable();
+	//Use IRQ
+	VICIntSelect &= ~(1<<sourcenum);
+	VICIntEnable |= 1<<sourcenum;
+	RegisterVector(sourcenum, handler, PRI_LOWEST, CLASS_IRQ);
+	IrqEnable();
+}
+void fiqregist(char sourcenum, void*handler)
+{
+	FiqDisable();
+	//Use FIQ
+	VICIntSelect |= 1<<sourcenum;
+	VICIntEnable |= 1<<sourcenum;
+	RegisterVector(sourcenum, handler, PRI_LOWEST, CLASS_IRQ);
+	FiqEnable();
+}
+int create_task(int*functionpointer)
+{
+	int pid=1;
+	return pid;
+}
+int kill_task(int*functionpointer)
+{
+	return 1;
+}
+int run_task(int*functionpointer)
+{
+	return 1;
+}
 int main(void)
 {
 	SCS = SCS | 1;
@@ -114,14 +139,15 @@ int main(void)
 	FIO1PIN =0x00000000;
 	FIO1MASK=0x00000000;
 
-	printf("hy");
+	printf("hy,hello world!\n");
 	//ymzinit();
 	//ymzwrite0(0x6ff,0);
 	//i2enable();
-	PCONP |= 0x00001000;
-	FIO1PIN =0x00000000;
-	fiqregist();
-	for(int i;i!=100;i++)
+	irqregist(TIMER0_INT,TIMER0_handler);
+	irqregist(TIMER1_INT,TIMER1_handler);
+	timer0setup();
+	timer1setup();
+	for(int i=0;i!=100;i++)
 		printf("Hello,World%d\n",i);
 	while(1);
 }
