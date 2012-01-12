@@ -24,12 +24,13 @@ Tasks are in list now, it is smarter implementation than table.
 Lack of MMU, we have to deal with "real" memory address, and we can't alocate
 a resizable table eazily.
 Task run queue is managed by
-int create_task(int*functionpointer);
-int kill_task(int pid);
-int run_task(int pid);
-int suspend_task(int pid);
-:
-:
-:
+
+	int create_task(int*functionpointer);
+	int kill_task(int pid);
+	int run_task(int pid);
+	int suspend_task(int pid);
+	:
+	:
+	:
 
 
