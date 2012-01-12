@@ -1,3 +1,8 @@
+Task switcher
+=============
+
+Trigger
+-------
 I've made decision to use IRQ for task switcher.
 
 First reason, FIQ is not focused at such a usage.
@@ -13,6 +18,8 @@ Here, as my decision to use IRQ, what I have to back up is only LR and SP(each
 of them are Link Register and Stack Pointer).
 
 
+Task structure
+--------------
 Tasks are in list now, it is smarter implementation than table.
 Lack of MMU, we have to deal with "real" memory address, and we can't alocate
 a resizable table eazily.
