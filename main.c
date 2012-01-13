@@ -17,18 +17,16 @@ extern void ymzwrite1(int,int);
 int i2cErr;
 
 typedef struct {
-	int hashval;
+	int pid;
 	int pc;
-	int*regfp;
-	int*regsp;
-	int*functionpointer;
-	int status;
+	int regsp[15];
+	int*entrypoint;
 }process_t;
 
 typedef struct _run{
 	struct _run*next;
 	process_t p;
-	int tic;
+	int status;
 }run_t;
 
 run_t*currentpr;

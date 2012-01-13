@@ -1,6 +1,6 @@
 @-----------------------------------------------------------@
 @ LPC2300 startup code and asm functions (C)ChaN, 2008
-@ IRQ Handler added by Iori.y.ja, Jan,2012
+@ FIQ/IRQ Handler added by Iori.y.ja, Jan,2012
 @-----------------------------------------------------------@
 
 
@@ -206,15 +206,51 @@ IRQ_Handler:
 .extern currentpr
 .extern switchp
 TaskMgr:
-	STMFD	SP!, {R0-R12}
-	LDR	r3, =currentpr		@get currentpr addr
-	STR	LR, [r3, #8]		@write previous PC on current process
-	LDR	r3, [r3, #0]		@get currentpr(next process adr)
+	STMFD	SP!, {R0,R3}
+	LDR	R3, =currentpr		@get currentpr addr
+	LDR	R0, [R3, #0]		@currentpr points current process cell
+savestatus:				@this is pointer for currentprocess cell
+	STR	LR, [R0, #8]		@write previous PC on current process
+	MOV	LR, R0
+	LDR	R0, [R0, #0]
+	STR	R0, [R3, #0]		@renew currentpr
+	LDMFD	SP!, {R0,R3}
+	STR	R1, [LR, #16]
+	STR	R2, [LR, #20]
+	STR	R0, [LR, #12]
+	STR	R3, [LR, #24]
+	STR	R4, [LR, #28]
+	STR	R5, [LR, #32]
+	STR	R6, [LR, #36]
+	STR	R7, [LR, #40]
+	STR	R8, [LR, #44]
+	STR	R9, [LR, #48]
+	STR	R10,[LR, #52]
+	STR	R11,[LR, #56]
+	STR	R12,[LR, #60]
+	STR	R13,[LR, #64]
+	STR	R14,[LR, #68]
+processchoice:
+	LDR	R0, [LR, #0]		@(next process adr)
 
-	LDR	r3, [r3, #0]		@currentprocess first member points next
-	LDR	r3, [r3, #0]		@process.
-	LDR	r0, [r3, #8]
-	MOV	PC, R0
+	LDR	LR, [R0, #8]		@next process's PC
+getbackstatus:
+	LDR	R1, [R0, #16]
+	LDR	R2, [R0, #20]
+	LDR	R3, [R0, #24]
+	LDR	R4, [R0, #28]
+	LDR	R5, [R0, #32]
+	LDR	R6, [R0, #36]
+	LDR	R7, [R0, #40]
+	LDR	R8, [R0, #44]
+	LDR	R9, [R0, #48]
+	LDR	R10,[R0, #52]
+	LDR	R11,[R0, #56]
+	LDR	R12,[R0, #60]
+	LDR	R13,[R0, #64]
+	LDR	R14,[R0, #68]
+	LDR	R0, [R0, #12]
+	MOV	PC, LR
 
 
 @-----------------------------------------------------------@
