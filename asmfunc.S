@@ -206,8 +206,9 @@ IRQ_Handler:
 .extern currentpr
 .extern switch
 TaskMgr:
-	STRMFD	SP!, {R0-R12}
-	LDR	R0, =switch
+	STMFD	SP!, {R0-R12}
+	LDR	R0, =switchp
+	MOV	LR, PC
 	MOV	PC, R0
 
 

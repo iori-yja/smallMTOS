@@ -32,10 +32,12 @@ typedef struct _run{
 }run_t;
 
 run_t*currentpr;
+run_t zeropr;
 
-int retnextp(){
+int switchp(){
+	run_t*next;
 	next = currentpr->next;
-	return next->process_t.pid;
+	return next->p.pid;
 }
 
 run_t zeropr;
@@ -163,6 +165,7 @@ int main(void)
 	FIO1MASK=0x00000000;
 
 	printf("hy,hello world!\n");
+	printf("ze%d",zeropr.p.pid);
 	//ymzinit();
 	//ymzwrite0(0x6ff,0);
 	//i2enable();
