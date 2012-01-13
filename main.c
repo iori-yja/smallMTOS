@@ -16,7 +16,6 @@ extern void ymzwrite1(int,int);
 
 int i2cErr;
 
-
 typedef struct {
 	int hashval;
 	int pid;
@@ -31,6 +30,15 @@ typedef struct _run{
 	process_t p;
 	int tic;
 }run_t;
+
+run_t*currentpr;
+
+int retnextp(){
+	next = currentpr->next;
+	return next->process_t.pid;
+}
+
+run_t zeropr;
 
 int create_task(int*functionpointer)
 {
@@ -141,6 +149,7 @@ void fiqregist(char sourcenum, void*handler)
 	RegisterVector(sourcenum, handler, PRI_LOWEST, CLASS_IRQ);
 	FiqEnable();
 }
+
 int main(void)
 {
 	SCS = SCS | 1;
@@ -157,9 +166,7 @@ int main(void)
 	//ymzinit();
 	//ymzwrite0(0x6ff,0);
 	//i2enable();
-	irqregist(TIMER0_INT,TIMER0_handler);
-	fiqregist(TIMER1_INT,TIMER1_handler);
-	timer0setup();
+	irqregist(TIMER1_INT,TIMER1_handler);
 	timer1setup();
 	for(int i=0;i!=100;i++)
 		printf("Hello,World%d\n",i);

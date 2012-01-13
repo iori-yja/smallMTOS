@@ -174,12 +174,17 @@ MTrap:	B	MTrap	@ Trap if main() terminated
 .equ VIC_VectAddr0,	0x100
 .equ VIC_VectPriority0,	0x200
 .equ VIC_Address,	0xF00
+.equ ticksrc,		0x10
 
 .section .text, "ax"
 .arm
 IRQ_Handler:
 	SUB	LR, LR, #4		@ Adjust LR_irq and push it
 	STMFD	SP!, {LR}
+	LDR	LR, =LPC_BASE_VIC
+	LDR	LR, [LR, #0]
+	CMP	LR, #ticksrc		@test if src is task tick or not
+	BEQ	TaskMgr
 
 	MRS	LR, SPSR		@ Save SPSR need to be saved for nested interrupt
 	STMFD	SP!, {R0-R3,IP,LR}	@ Push scratch/used registers and SPSR
@@ -197,6 +202,13 @@ IRQ_Handler:
 	STR	LR, [LR, #VIC_Address]
 
 	LDMFD	SP!, {PC}^		@ Reruen from the IRQ handler
+
+.extern currentpr
+.extern switch
+TaskMgr:
+	STRMFD	SP!, {R0-R12}
+	LDR	R0, =switch
+	MOV	PC, R0
 
 
 @-----------------------------------------------------------@
