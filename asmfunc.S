@@ -204,11 +204,16 @@ IRQ_Handler:
 	LDMFD	SP!, {PC}^		@ Reruen from the IRQ handler
 
 .extern currentpr
-.extern switch
+.extern switchp
 TaskMgr:
 	STMFD	SP!, {R0-R12}
-	LDR	R0, =switchp
-	MOV	LR, PC
+	LDR	r3, =currentpr		@get currentpr addr
+	STR	LR, [r3, #8]		@write previous PC on current process
+	LDR	r3, [r3, #0]		@get currentpr(next process adr)
+
+	LDR	r3, [r3, #0]		@currentprocess first member points next
+	LDR	r3, [r3, #0]		@process.
+	LDR	r0, [r3, #8]
 	MOV	PC, R0
 
 

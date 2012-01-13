@@ -18,7 +18,7 @@ int i2cErr;
 
 typedef struct {
 	int hashval;
-	int pid;
+	int pc;
 	int*regfp;
 	int*regsp;
 	int*functionpointer;
@@ -37,7 +37,7 @@ run_t zeropr;
 int switchp(){
 	run_t*next;
 	next = currentpr->next;
-	return next->p.pid;
+	return next->p.pc;
 }
 
 run_t zeropr;
@@ -165,7 +165,6 @@ int main(void)
 	FIO1MASK=0x00000000;
 
 	printf("hy,hello world!\n");
-	printf("ze%d",zeropr.p.pid);
 	//ymzinit();
 	//ymzwrite0(0x6ff,0);
 	//i2enable();
