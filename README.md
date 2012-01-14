@@ -5,7 +5,7 @@ Trigger
 -------
 I've made decision to use IRQ for task switcher.
 
-First reason, FIQ is not focused at such a usage.
+First reason, FIQ does not focus at such a usage.
 FIQ is especcially used in very strict time limitation, like as in controlling
 DRAMs, framebuffer, etc.
 
@@ -33,4 +33,33 @@ Task run queue is managed by
 	:
 	:
 
+Task expression is below:
+
+	typedef struct {
+		int pid;
+		int pc;
+		int regsp[15];
+		int*entrypoint;
+	}process_t;
+
+Above is process structure.
+And process is "wraped" by below structure.
+
+	typedef struct _run{
+		struct _run*next;
+		process_t p;
+		int status;
+	}run_t;
+
+There is no reason to separate them now,
+and possiblly will join, but this change make no problem in ARM EABI.
+I'll make sure specification about task.
+
+In ARM EABI, You can access: (Rp points a run\_t entity.)
+
+	next process:	LDR/STR	Rd, [Rp, #0]
+	pid:		LDR/STR	Rd, [Rp, #0]
+	pc:		LDR/STR	Rd, [Rp, #0]
+	regsp:		LDR/STR	Rd, [Rp, #0]
+	entrypoint:	LDR/STR	Rd, [Rp, #0]
 
