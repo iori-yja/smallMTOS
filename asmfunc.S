@@ -206,6 +206,7 @@ IRQ_Handler:
 .extern currentpr
 .extern switchp
 TaskMgr:
+	LDMFD	SP!, {LR}
 	STMFD	SP!, {R0,R3}
 	LDR	R3, =currentpr		@get currentpr addr
 	LDR	R0, [R3, #0]		@currentpr points current process cell
@@ -228,8 +229,8 @@ savestatus:				@this is pointer for currentprocess cell
 	STR	R10,[LR, #52]
 	STR	R11,[LR, #56]
 	STR	R12,[LR, #60]
+	MSR	CPSR_c, #M_UND | B_Irq | B_Fiq
 	STR	R13,[LR, #64]
-	STR	R14,[LR, #68]
 processchoice:
 	LDR	R0, [LR, #0]		@(next process adr)
 
@@ -248,7 +249,6 @@ getbackstatus:
 	LDR	R11,[R0, #56]
 	LDR	R12,[R0, #60]
 	LDR	R13,[R0, #64]
-	LDR	R14,[R0, #68]
 	LDR	R0, [R0, #12]
 	MOV	PC, LR
 
