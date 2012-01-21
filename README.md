@@ -53,7 +53,7 @@ And process is "wraped" by below structure.
 
 There is no reason to separate them now,
 and possiblly will join, but this change won't do nothing running in ARM EABI.
-I'll make sure specification about task.
+I'll make sure specification about task by porting this.
 
 In ARM EABI, You can access: (Rp points a run\_t entity.)
 

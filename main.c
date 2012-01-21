@@ -18,8 +18,9 @@ int i2cErr;
 
 typedef struct {
 	int pid;
-	int pc;
+	int*pc;
 	int regsp[15];
+	int sr;
 	int*entrypoint;
 }process_t;
 
@@ -31,14 +32,14 @@ typedef struct _run{
 
 run_t*currentpr;
 run_t zeropr;
-
-int switchp(){
+run_t onepr;
+/*
+int switchp(void){
 	run_t*next;
 	next = currentpr->next;
 	return next->p.pc;
 }
-
-run_t zeropr;
+*/
 
 int create_task(int*functionpointer)
 {
@@ -105,7 +106,7 @@ void TIMER0_handler (void)
 void TIMER1_handler (void)
 {
 	FIO1PIN ^=0x00040000;
-	printf("2");
+	printf("Timer 2 message\n");
 	T1IR = 1;
 }
 
@@ -119,7 +120,7 @@ void timer0setup(void)
 {
 	T0PR = 0x00000000;
 	/*  *TIMER0_MatchRegister0       = 0x00080000; */
-	T0MR0 = 0x00010000;
+	T0MR0 = 0x00080000;
 	T0MCR = 0x00000003;      /* Match時にTCクリア & 割り込み */
 	T0TCR = 1;
 }
@@ -127,7 +128,7 @@ void timer1setup(void)
 {
 	T1PR = 0x00000000;
 	/*  *TIMER0_MatchRegister0       = 0x00080000; */
-	T1MR0 = 0x00020300;
+	T1MR0 = 0x00080300;
 	T1MCR = 0x00000003;      /* Match時にTCクリア & 割り込み */
 	T1TCR = 1;
 }
@@ -149,7 +150,18 @@ void fiqregist(char sourcenum, void*handler)
 	RegisterVector(sourcenum, handler, PRI_LOWEST, CLASS_IRQ);
 	FiqEnable();
 }
-
+void func(void){
+	while (1){
+		Delay(18888);
+		printf ("hofg\n");
+	}
+}
+void func1(void){
+	while (1){
+		Delay(18888);
+		printf ("aaag\n");
+	}
+}
 int main(void)
 {
 	SCS = SCS | 1;
@@ -161,14 +173,21 @@ int main(void)
 	FIO1DIR =0x00040000;
 	FIO1PIN =0x00000000;
 	FIO1MASK=0x00000000;
-
+	zeropr.status = 0;
+	zeropr.p.pid  = 0;
+	zeropr.p.pc   = (void *)func;
+	zeropr.next   = &onepr;
+	currentpr     = &zeropr;
+	onepr.status = 0;
+	onepr.p.pid  = 2;
+	onepr.p.pc   = (void *)func1;
+	onepr.next   = &zeropr;
 	printf("hy,hello world!\n");
 	//ymzinit();
 	//ymzwrite0(0x6ff,0);
 	//i2enable();
-	irqregist(TIMER1_INT,TIMER1_handler);
-	timer1setup();
-	for(int i=0;i!=100;i++)
-		printf("Hello,World%d\n",i);
+	irqregist(TIMER0_INT,TIMER0_handler);
+	timer0setup();
+	func();
 	while(1);
 }

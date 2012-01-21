@@ -1,5 +1,5 @@
 @-----------------------------------------------------------@
-@ LPC2300 startup code and asm functions (C)ChaN, 2008
+@ LPC23xx 1startup code and asm functions (C)ChaN, 2008
 @ FIQ/IRQ Handler added by Iori.y.ja, Jan,2012
 @-----------------------------------------------------------@
 
@@ -179,6 +179,7 @@ MTrap:	B	MTrap	@ Trap if main() terminated
 .section .text, "ax"
 .arm
 IRQ_Handler:
+	MSR	CPSR_c, #M_IRQ | B_Irq | B_Fiq
 	SUB	LR, LR, #4		@ Adjust LR_irq and push it
 	STMFD	SP!, {LR}
 	LDR	LR, =LPC_BASE_VIC
@@ -191,12 +192,13 @@ IRQ_Handler:
 	LDR	R0, =LPC_BASE_VIC	@ Get the ISR address pointed by VIC_VectAddr
 	LDR	R0, [R0, #VIC_Address]
 
+	MSR	CPSR_c, #M_IRQ		@ Enter IRQ mode and enable Irq
 	MOV	LR, PC
 	BX	R0
 
 	MSR	CPSR_c, #M_IRQ | B_Irq	@ Enter IRQ mode and disable Irq
 	LDMFD	SP!, {R0-R3,IP,LR}	@ Restore scratch/used registers and SPSR
-	MSR	SPSR_cxsf, LR		@ Restore SPSR_irq
+	MSR	SPSR, LR		@ Restore SPSR_irq
 
 	LDR	LR, =LPC_BASE_VIC	@ Issue EOI command to the VIC
 	STR	LR, [LR, #VIC_Address]
@@ -204,7 +206,6 @@ IRQ_Handler:
 	LDMFD	SP!, {PC}^		@ Reruen from the IRQ handler
 
 .extern currentpr
-.extern switchp
 TaskMgr:
 	LDMFD	SP!, {LR}
 	STMFD	SP!, {R0,R3}
@@ -229,12 +230,27 @@ savestatus:				@this is pointer for currentprocess cell
 	STR	R10,[LR, #52]
 	STR	R11,[LR, #56]
 	STR	R12,[LR, #60]
-	MSR	CPSR_c, #M_UND | B_Irq | B_Fiq
-	STR	R13,[LR, #64]
+	MSR	CPSR_c, #M_SYS | B_Irq | B_Fiq
+	MOV	R12, SP
+	MOV	R11, LR
+	MSR	CPSR_c, #M_IRQ | B_Irq | B_Fiq
+	STR	R12,[LR, #64]
+	STR	R11,[LR, #68]
 processchoice:
 	LDR	R0, [LR, #0]		@(next process adr)
+	MRS	LR, SPSR		@ Save SPSR need to be saved for nested interrupt
+	STMFD	SP!, {R0-R3,IP,LR}	@ Push scratch/used registers and SPSR
+	LDR	R0, =LPC_BASE_VIC	@ Get the ISR address pointed by VIC_VectAddr
+	LDR	R0, [R0, #VIC_Address]
+
+	MSR	CPSR_c, #M_IRQ		@ Enter IRQ mode and enable Irq
+	MOV	LR, PC
+	BX	R0
+	LDMFD	SP!, {R0-R3,IP,LR}	@ Restore scratch/used registers and SPSR
+	MSR	CPSR_c, #M_IRQ | B_Irq | B_Fiq
 
 	LDR	LR, [R0, #8]		@next process's PC
+	STMFD	SP!, {LR}
 getbackstatus:
 	LDR	R1, [R0, #16]
 	LDR	R2, [R0, #20]
@@ -248,9 +264,13 @@ getbackstatus:
 	LDR	R10,[R0, #52]
 	LDR	R11,[R0, #56]
 	LDR	R12,[R0, #60]
+	MSR	CPSR_c, #M_SYS
 	LDR	R13,[R0, #64]
 	LDR	R0, [R0, #12]
-	MOV	PC, LR
+	MSR	CPSR_c, #M_IRQ
+	LDR	LR, =LPC_BASE_VIC	@ Issue EOI command to the VIC
+	STR	LR, [LR, #VIC_Address]
+	LDMFD	SP!, {PC}^
 
 
 @-----------------------------------------------------------@
