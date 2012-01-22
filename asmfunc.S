@@ -238,20 +238,38 @@ savestatus:				@this is pointer for currentprocess cell
 	STR	R11,[LR, #68]
 processchoice:
 	LDR	R0, [LR, #0]		@(next process adr)
-	MRS	LR, SPSR		@ Save SPSR need to be saved for nested interrupt
-	STMFD	SP!, {R0-R3,IP,LR}	@ Push scratch/used registers and SPSR
-	LDR	R0, =LPC_BASE_VIC	@ Get the ISR address pointed by VIC_VectAddr
-	LDR	R0, [R0, #VIC_Address]
-
-	MSR	CPSR_c, #M_IRQ		@ Enter IRQ mode and enable Irq
-	MOV	LR, PC
-	BX	R0
-	LDMFD	SP!, {R0-R3,IP,LR}	@ Restore scratch/used registers and SPSR
+	MRS	R1, SPSR		@ Save SPSR need to be saved for nested interrupt
+	STR	R1, [LR, #72]
+	STMFD	SP!, {R0}	@ Push scratch/used registers and SPSR
+	ldr	lr, .L27
+	ldr	r2, .L27+4
+	ldr	r0, [lr, #-4043]
+	ldr	r1, [r2, #0]
+	eor	ip, r0, #262144
+	ldr	r1, [r1, #4]
+	ldr	r0, .L27+8
+	str	ip, [lr, #-4043]
+	bl	printf
+	ldr	r3, .L27+12
+	mov	r2, #1
+	str	r2, [r3, #0]
+.LC3:
+	.ascii	"p:%d\000"
+	.space	3
+.L27:
+	.word	1073729535
+	.word	currentpr
+	.word	.LC3
+	.word	-536854528
+	.align	2
+	LDMFD	SP!, {R0}	@ Restore scratch/used registers and SPSR
 	MSR	CPSR_c, #M_IRQ | B_Irq | B_Fiq
 
 	LDR	LR, [R0, #8]		@next process's PC
 	STMFD	SP!, {LR}
 getbackstatus:
+	LDR	R1, [R0, #72]
+	MSR	SPSR, R1
 	LDR	R1, [R0, #16]
 	LDR	R2, [R0, #20]
 	LDR	R3, [R0, #24]

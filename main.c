@@ -33,6 +33,8 @@ typedef struct _run{
 run_t*currentpr;
 run_t zeropr;
 run_t onepr;
+run_t twopr;
+run_t thrpr;
 /*
 int switchp(void){
 	run_t*next;
@@ -100,7 +102,7 @@ int issrgetbit(void)
 void TIMER0_handler (void)
 {
 	FIO1PIN ^=0x00040000;
-	printf("1");
+	printf("p:%d", currentpr->p.pid);
 	T0IR = 1;
 }
 void TIMER1_handler (void)
@@ -120,7 +122,7 @@ void timer0setup(void)
 {
 	T0PR = 0x00000000;
 	/*  *TIMER0_MatchRegister0       = 0x00080000; */
-	T0MR0 = 0x00080000;
+	T0MR0 = 0x00f00000;
 	T0MCR = 0x00000003;      /* Match時にTCクリア & 割り込み */
 	T0TCR = 1;
 }
@@ -162,6 +164,18 @@ void func1(void){
 		printf ("aaag\n");
 	}
 }
+void func2(void){
+	while (1){
+		Delay(18888);
+		printf ("google\n");
+	}
+}
+void func3(void){
+	while (1){
+		Delay(18888);
+		printf ("foo\n");
+	}
+}
 int main(void)
 {
 	SCS = SCS | 1;
@@ -177,11 +191,19 @@ int main(void)
 	zeropr.p.pid  = 0;
 	zeropr.p.pc   = (void *)func;
 	zeropr.next   = &onepr;
-	currentpr     = &zeropr;
-	onepr.status = 0;
-	onepr.p.pid  = 2;
-	onepr.p.pc   = (void *)func1;
-	onepr.next   = &zeropr;
+	currentpr     = &twopr;
+	onepr.status  = 0;
+	onepr.p.pid   = 1;
+	onepr.p.pc    = (void *)func1;
+	onepr.next    = &twopr;
+	twopr.status  = 0;
+	twopr.p.pid   = 2;
+	twopr.p.pc    = (void *)func2;
+	twopr.next    = &thrpr;
+	thrpr.status  = 0;
+	thrpr.p.pid   = 3;
+	thrpr.p.pc    = (void *)func3;
+	thrpr.next    = &zeropr;
 	printf("hy,hello world!\n");
 	//ymzinit();
 	//ymzwrite0(0x6ff,0);
