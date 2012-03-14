@@ -15,7 +15,7 @@ More registers are masked in FIQ mode than IRQ mode, and it is very complicated
 and rather slow to back up more registers under mask.
 
 Here, as my decision to use IRQ, what I have to back up is only LR and SP(each
-of them are Link Register and Stack Pointer).
+of them are Link Registeaaaar and Stack Pointer).
 
 
 Task structure
